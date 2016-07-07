@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+	<title>SPA in JS</title>
+	<style type="text/css">
+		body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background-color: #777;
+		}
+		#spa {
+			position: absolute;
+			top: 8px;
+			left: 8px;
+			bottom: 8px;
+			right: 8px;
+			border-radius: 8px 8px 0 8px;
+			background-color: #fff;
+		}
+		.spa-slider {
+			position: absolute;
+			bottom: 0;
+			right: 0px;
+			width: 300px;
+			height: 16px;
+			cursor: pointer;
+			border-radius: 8px 0 0 0;
+			background-color: #f00;
+		}
+	</style>
+	<script type="text/javascript" src="js/jq/jquery-3.0.0.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			console.log(makeConfigMap(1, "himanshu").retracted_title);
+			$("#spa").html(configMap.template_html);
+
+			chatSlider = $(".spa-slider");
+
+			chatSlider.click(function() {
+				toggleChatSlide();
+			});
+
+			var obj = { some : function() { var hmm = this; test({ success : function() { console.log(hmm); } }); } };
+			//obj.some();
+		});
+
+		function test(obj) {
+			obj.success();
+		}
+
+		var configMap = {
+				extended_height : 434,
+				extended_title : "Click to retract",
+				retracted_height : 16,
+				retracted_title : "Click to expand",
+				template_html : "<div class='spa-slider'><\/div>"
+		};
+
+		function makeConfigMap(id, name) {
+			
+			function object(id, name) {
+				this.id = id; this.name = name;
+			}
+
+			object.prototype = configMap;
+
+			return new object(id, name);
+
+		}
+
+		//var chatSlider;
+
+		function toggleChatSlide() {
+			if (chatSlider.height() == configMap.retracted_height) {
+				chatSlider.animate({ height : configMap.extended_height });
+				chatSlider.attr("title", configMap.extended_title);
+			}
+			else if (chatSlider.height() == configMap.extended_height) {
+				chatSlider.animate({ height : configMap.retracted_height });
+				chatSlider.attr("title", configMap.retracted_title);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="spa">
+	</div>
+</body>
+</html>
